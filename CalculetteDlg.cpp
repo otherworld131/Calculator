@@ -59,13 +59,20 @@ CCalculetteDlg::CCalculetteDlg(CWnd* pParent /*=nullptr*/)
 void CCalculetteDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1_NUMBER1, m_editNumber1);
+	DDX_Control(pDX, IDC_EDIT1_NUMBER2, m_editNumber2);
+	DDX_Control(pDX, IDC_STATIC_RESULT, m_staticResult);
 }
 
 BEGIN_MESSAGE_MAP(CCalculetteDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_WM_CONTEXTMENU()
 	ON_EN_CHANGE(IDC_EDIT1_NUMBER1, &CCalculetteDlg::OnEnChangeEdit1Number1)
+	ON_EN_CHANGE(IDC_EDIT1_NUMBER2, &CCalculetteDlg::OnEnChangeEdit1Number2)
+	ON_BN_CLICKED(IDC_BUTTON_CLEAR, &CCalculetteDlg::OnBnClickedButtonClear)
+	ON_COMMAND(ID_TOOLS_CALCULATE, &CCalculetteDlg::OnToolsCalculate)
 END_MESSAGE_MAP()
 
 
@@ -100,7 +107,7 @@ BOOL CCalculetteDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 
-	// TODO: Add extra initialization here
+	m_nResult = 0;
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
@@ -157,10 +164,138 @@ HCURSOR CCalculetteDlg::OnQueryDragIcon()
 
 void CCalculetteDlg::OnEnChangeEdit1Number1()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialogEx::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the mask.
+	ValidateNumericInput(m_editNumber1);
+}
 
-	// TODO:  Add your control notification handler code here
+void CCalculetteDlg::OnBnClickedButtonClear()
+{
+	m_editNumber1.SetWindowText(_T(""));
+	m_editNumber2.SetWindowText(_T(""));
+	m_staticResult.SetWindowText(_T(""));
+	m_nResult = 0;
+}
+
+void CCalculetteDlg::OnToolsCalculate()
+{
+	CString strNum1, strNum2;
+	m_editNumber1.GetWindowText(strNum1);
+	m_editNumber2.GetWindowText(strNum2);
+
+	if (strNum1.IsEmpty() || strNum2.IsEmpty())
+	{
+		MessageBox(_T("Error: Please enter values in both number fields."),
+			_T("Input Error"), MB_OK | MB_ICONERROR);
+		return;
+	}
+
+	int nNumber1 = _ttoi(strNum1);
+	int nNumber2 = _ttoi(strNum2);
+
+	if (nNumber1 > INT_MAX - nNumber2)
+	{
+		MessageBox(_T("Error: Integer overflow! Result exceeds maximum value (2,147,483,647)."),
+			_T("Calculation Error"), MB_OK | MB_ICONERROR);
+		return;
+	}
+
+	m_nResult = nNumber1 + nNumber2;
+
+	CString strResult;
+	strResult.Format(_T("%d"), m_nResult);
+	m_staticResult.SetWindowText(strResult);
+
+	LogCalculation(nNumber1, nNumber2, m_nResult);
+}
+
+void CCalculetteDlg::OnContextMenu(CWnd* pWnd, CPoint point)
+{
+	CMenu menu;
+	if (!menu.LoadMenu(IDR_CONTEXT_MENU))
+	{
+		CDialogEx::OnContextMenu(pWnd, point);
+		return;
+	}
+
+	CMenu* pPopup = menu.GetSubMenu(0);
+	if (pPopup == nullptr)
+	{
+		CDialogEx::OnContextMenu(pWnd, point);
+		return;
+	}
+
+	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
+}
+
+void CCalculetteDlg::OnOK()
+{
+	OnToolsCalculate();
+}
+
+void CCalculetteDlg::LogCalculation(int nNum1, int nNum2, int nResult)
+{
+	CTime currentTime = CTime::GetCurrentTime();
+	CString strTime = currentTime.Format(_T("%Y-%m-%d %H:%M:%S"));
+
+	CString strLogEntry;
+	strLogEntry.Format(_T("[%s] %d + %d = %d\r\n"), strTime, nNum1, nNum2, nResult);
+
+	TCHAR szPath[MAX_PATH];
+	GetModuleFileName(nullptr, szPath, MAX_PATH);
+	CString strFilePath(szPath);
+	int nLastSlash = strFilePath.ReverseFind(_T('\\'));
+	if (nLastSlash >= 0)
+	{
+		strFilePath = strFilePath.Left(nLastSlash + 1);
+	}
+	strFilePath += _T("calculations.log");
+
+	FILE* pFile = nullptr;
+	errno_t err = _tfopen_s(&pFile, strFilePath, _T("a"));
+	if (err == 0 && pFile != nullptr)
+	{
+		_fputts(strLogEntry, pFile);
+		fclose(pFile);
+	}
+	else
+	{
+		CString strError;
+		strError.Format(_T("Warning: Could not write to log file.\n\nPath: %s\nError code: %d\n\nCalculation completed successfully."),
+			strFilePath, err);
+		MessageBox(strError, _T("Logging Warning"), MB_OK | MB_ICONWARNING);
+	}
+}
+
+void CCalculetteDlg::OnEnChangeEdit1Number2()
+{
+	ValidateNumericInput(m_editNumber2);
+}
+
+void CCalculetteDlg::ValidateNumericInput(CEdit& editControl)
+{
+	// Alternative: Subclass CEdit and override WM_PASTE to block invalid paste before it appears
+
+	CString strText;
+	editControl.GetWindowText(strText);
+
+	CString strCleaned;
+	for (int i = 0; i < strText.GetLength(); i++)
+	{
+		if (_istdigit(strText[i]))
+		{
+			strCleaned += strText[i];
+		}
+	}
+
+	if (strCleaned != strText)
+	{
+		int nStart, nEnd;
+		editControl.GetSel(nStart, nEnd);
+
+		editControl.SetWindowText(strCleaned);
+
+		int nNewPos = min(nStart, strCleaned.GetLength());
+		editControl.SetSel(nNewPos, nNewPos);
+
+		MessageBeep(MB_ICONEXCLAMATION);
+	}
 }
