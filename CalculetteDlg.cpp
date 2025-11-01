@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CCalculetteDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_EN_CHANGE(IDC_EDIT1_NUMBER1, &CCalculetteDlg::OnEnChangeEdit1Number1)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +154,13 @@ HCURSOR CCalculetteDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CCalculetteDlg::OnEnChangeEdit1Number1()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// send this notification unless you override the CDialogEx::OnInitDialog()
+	// function and call CRichEditCtrl().SetEventMask()
+	// with the ENM_CHANGE flag ORed into the mask.
+
+	// TODO:  Add your control notification handler code here
+}
