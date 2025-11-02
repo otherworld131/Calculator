@@ -7,15 +7,12 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_Calculator_DIALOG           102
 #define IDR_MAINFRAME                   128
-#define IDR_MENU1                       130
 #define IDR_CONTEXT_MENU                130
 #define IDC_EDIT1_NUMBER1               1000
-#define IDC_BUTTON1                     1002
 #define IDC_BUTTON_CLEAR                1002
 #define IDC_EDIT1_NUMBER2               1003
 #define IDC_STATIC_RESULT               1004
 #define ID_TOOLS_CALCULATE              32771
-#define ID_TOOLS                        32772
 
 // Next default values for new objects
 // 

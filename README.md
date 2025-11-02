@@ -6,7 +6,7 @@ A simple calculator application written in C++ with MFC (Microsoft Foundation Cl
 
 - Add two positive integers
 - Clear input and result fields
-- Display result in real-time
+- Display result when Calculate is invoked (menu, context menu, or Enter)
 - Tools menu with Calculate option
 - Context menu with Calculate option
 - Automatic logging of all calculations to a `calculations.log` file
