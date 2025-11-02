@@ -1,5 +1,6 @@
-# Design Assumptions - Calculette MFC Application
+# Design Assumptions - Calculator MFC Application
 
+* Decide on "Calculator" as the application name - in English to be consistent.
 * We only consider positive integers for addition. To be reviewed later if needed given the limited scope of the exercise.
 * Max integer size is based on standard C++ `int` type.
 * Log file is created in the same directory as the executable.

@@ -1,4 +1,4 @@
-# Calculette
+# Calculator
 
 A simple calculator application written in C++ with MFC (Microsoft Foundation Classes).
 
@@ -20,7 +20,7 @@ A simple calculator application written in C++ with MFC (Microsoft Foundation Cl
 
 ## Building
 
-1. Open `Calculette.sln` in Visual Studio 2022
+1. Open `Calculator.sln` in Visual Studio 2022
 2. Build the solution (Ctrl+Shift+B)
 3. Run the application (F5)
 

@@ -1,11 +1,11 @@
 
-// CalculetteDlg.cpp : implementation file
+// CalculatorDlg.cpp : implementation file
 //
 
 #include "pch.h"
 #include "framework.h"
-#include "Calculette.h"
-#include "CalculetteDlg.h"
+#include "Calculator.h"
+#include "CalculatorDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -46,17 +46,17 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-// CCalculetteDlg dialog
+// CCalculatorDlg dialog
 
 
 
-CCalculetteDlg::CCalculetteDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_CALCULETTE_DIALOG, pParent), m_nResult(0)
+CCalculatorDlg::CCalculatorDlg(CWnd* pParent /*=nullptr*/)
+	: CDialogEx(IDD_Calculator_DIALOG, pParent), m_nResult(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CCalculetteDlg::DoDataExchange(CDataExchange* pDX)
+void CCalculatorDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1_NUMBER1, m_editNumber1);
@@ -64,21 +64,21 @@ void CCalculetteDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_STATIC_RESULT, m_staticResult);
 }
 
-BEGIN_MESSAGE_MAP(CCalculetteDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CCalculatorDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_WM_CONTEXTMENU()
-	ON_EN_CHANGE(IDC_EDIT1_NUMBER1, &CCalculetteDlg::OnEnChangeEdit1Number1)
-	ON_EN_CHANGE(IDC_EDIT1_NUMBER2, &CCalculetteDlg::OnEnChangeEdit1Number2)
-	ON_BN_CLICKED(IDC_BUTTON_CLEAR, &CCalculetteDlg::OnBnClickedButtonClear)
-	ON_COMMAND(ID_TOOLS_CALCULATE, &CCalculetteDlg::OnToolsCalculate)
+	ON_EN_CHANGE(IDC_EDIT1_NUMBER1, &CCalculatorDlg::OnEnChangeEdit1Number1)
+	ON_EN_CHANGE(IDC_EDIT1_NUMBER2, &CCalculatorDlg::OnEnChangeEdit1Number2)
+	ON_BN_CLICKED(IDC_BUTTON_CLEAR, &CCalculatorDlg::OnBnClickedButtonClear)
+	ON_COMMAND(ID_TOOLS_CALCULATE, &CCalculatorDlg::OnToolsCalculate)
 END_MESSAGE_MAP()
 
 
-// CCalculetteDlg message handlers
+// CCalculatorDlg message handlers
 
-BOOL CCalculetteDlg::OnInitDialog()
+BOOL CCalculatorDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -112,7 +112,7 @@ BOOL CCalculetteDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CCalculetteDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CCalculatorDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -129,7 +129,7 @@ void CCalculetteDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CCalculetteDlg::OnPaint()
+void CCalculatorDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -156,18 +156,18 @@ void CCalculetteDlg::OnPaint()
 
 // The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CCalculetteDlg::OnQueryDragIcon()
+HCURSOR CCalculatorDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
 
-void CCalculetteDlg::OnEnChangeEdit1Number1()
+void CCalculatorDlg::OnEnChangeEdit1Number1()
 {
 	ValidateNumericInput(m_editNumber1);
 }
 
-void CCalculetteDlg::OnBnClickedButtonClear()
+void CCalculatorDlg::OnBnClickedButtonClear()
 {
 	m_editNumber1.SetWindowText(_T(""));
 	m_editNumber2.SetWindowText(_T(""));
@@ -175,7 +175,7 @@ void CCalculetteDlg::OnBnClickedButtonClear()
 	m_nResult = 0;
 }
 
-void CCalculetteDlg::OnToolsCalculate()
+void CCalculatorDlg::OnToolsCalculate()
 {
 	CString strNum1, strNum2;
 	m_editNumber1.GetWindowText(strNum1);
@@ -207,7 +207,7 @@ void CCalculetteDlg::OnToolsCalculate()
 	LogCalculation(nNumber1, nNumber2, m_nResult);
 }
 
-void CCalculetteDlg::OnContextMenu(CWnd* pWnd, CPoint point)
+void CCalculatorDlg::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	CMenu menu;
 	if (!menu.LoadMenu(IDR_CONTEXT_MENU))
@@ -226,12 +226,12 @@ void CCalculetteDlg::OnContextMenu(CWnd* pWnd, CPoint point)
 	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 }
 
-void CCalculetteDlg::OnOK()
+void CCalculatorDlg::OnOK()
 {
 	OnToolsCalculate();
 }
 
-void CCalculetteDlg::LogCalculation(int nNum1, int nNum2, int nResult)
+void CCalculatorDlg::LogCalculation(int nNum1, int nNum2, int nResult)
 {
 	CTime currentTime = CTime::GetCurrentTime();
 	CString strTime = currentTime.Format(_T("%Y-%m-%d %H:%M:%S"));
@@ -265,12 +265,12 @@ void CCalculetteDlg::LogCalculation(int nNum1, int nNum2, int nResult)
 	}
 }
 
-void CCalculetteDlg::OnEnChangeEdit1Number2()
+void CCalculatorDlg::OnEnChangeEdit1Number2()
 {
 	ValidateNumericInput(m_editNumber2);
 }
 
-void CCalculetteDlg::ValidateNumericInput(CEdit& editControl)
+void CCalculatorDlg::ValidateNumericInput(CEdit& editControl)
 {
 	// Alternative: Subclass CEdit and override WM_PASTE to block invalid paste before it appears
 

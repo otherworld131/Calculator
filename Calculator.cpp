@@ -1,39 +1,39 @@
 
-// Calculette.cpp : Defines the class behaviors for the application.
+// Calculator.cpp : Defines the class behaviors for the application.
 //
 
 #include "pch.h"
 #include "framework.h"
-#include "Calculette.h"
-#include "CalculetteDlg.h"
+#include "Calculator.h"
+#include "CalculatorDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CCalculetteApp
+// CCalculatorApp
 
-BEGIN_MESSAGE_MAP(CCalculetteApp, CWinApp)
+BEGIN_MESSAGE_MAP(CCalculatorApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CCalculetteApp construction
+// CCalculatorApp construction
 
-CCalculetteApp::CCalculetteApp()
+CCalculatorApp::CCalculatorApp()
 {
 }
 
 
-// The one and only CCalculetteApp object
+// The one and only CCalculatorApp object
 
-CCalculetteApp theApp;
+CCalculatorApp theApp;
 
 
-// CCalculetteApp initialization
+// CCalculatorApp initialization
 
-BOOL CCalculetteApp::InitInstance()
+BOOL CCalculatorApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
@@ -42,7 +42,7 @@ BOOL CCalculetteApp::InitInstance()
 
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	CCalculetteDlg dlg;
+	CCalculatorDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == -1)

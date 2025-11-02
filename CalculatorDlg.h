@@ -1,20 +1,20 @@
 
-// CalculetteDlg.h : header file
+// CalculatorDlg.h : header file
 //
 
 #pragma once
 
 
-// CCalculetteDlg dialog
-class CCalculetteDlg : public CDialogEx
+// CCalculatorDlg dialog
+class CCalculatorDlg : public CDialogEx
 {
 // Construction
 public:
-	CCalculetteDlg(CWnd* pParent = nullptr);	// standard constructor
+	CCalculatorDlg(CWnd* pParent = nullptr);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_CALCULETTE_DIALOG };
+	enum { IDD = IDD_Calculator_DIALOG };
 #endif
 
 	protected:

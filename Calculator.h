@@ -1,5 +1,5 @@
 
-// Calculette.h : main header file for the PROJECT_NAME application
+// Calculator.h : main header file for the PROJECT_NAME application
 //
 
 #pragma once
@@ -11,14 +11,14 @@
 #include "resource.h"		// main symbols
 
 
-// CCalculetteApp:
-// See Calculette.cpp for the implementation of this class
+// CCalculatorApp:
+// See Calculator.cpp for the implementation of this class
 //
 
-class CCalculetteApp : public CWinApp
+class CCalculatorApp : public CWinApp
 {
 public:
-	CCalculetteApp();
+	CCalculatorApp();
 
 // Overrides
 public:
@@ -29,4 +29,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CCalculetteApp theApp;
+extern CCalculatorApp theApp;
