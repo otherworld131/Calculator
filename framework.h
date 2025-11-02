@@ -27,6 +27,8 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+#include <climits>              // For INT_MAX, INT_MIN constants
+
 
 
 

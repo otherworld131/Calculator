@@ -51,7 +51,7 @@ END_MESSAGE_MAP()
 
 
 CCalculetteDlg::CCalculetteDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_CALCULETTE_DIALOG, pParent)
+	: CDialogEx(IDD_CALCULETTE_DIALOG, pParent), m_nResult(0)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
