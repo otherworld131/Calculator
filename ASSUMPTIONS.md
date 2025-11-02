@@ -1,5 +1,6 @@
 # Design Assumptions - Calculator MFC Application
 
+* Use VS2022 instead of VS2010 due to installer availability.
 * Decide on "Calculator" as the application name - in English to be consistent.
 * We only consider positive integers for addition. To be reviewed later if needed given the limited scope of the exercise.
 * Max integer size is based on standard C++ `int` type.

@@ -13,7 +13,7 @@ A simple calculator application written in C++ with MFC (Microsoft Foundation Cl
 
 ## Requirements
 
-- **Visual Studio 2022**
+- **Visual Studio 2022** (the exercise suggested VS2010, but I was unable to find a working installer for it)
 - **MFC++ component** from the Visual Studio installer
   - During installation, select "Desktop development with C++" workload
   - In the installation details, ensure "MSVC v143 build tools" and "Windows 10/11 SDK" include MFC support
